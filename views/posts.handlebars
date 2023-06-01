@@ -1,0 +1,9 @@
+<h2>{{Post.title}}</h2>
+<h3>Author: {{Post.User.name}}</h3>
+<h4>{{Post.content}}</h4>
+<form action="">
+    <input type="text" id="comment" placeholder="Comment">
+<button>Add</button>
+</form>
+{{>comments}}
+<script src="/public/createPost.js"></script>

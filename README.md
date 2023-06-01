@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a coding focused tech blog for developers to share their experiences and their knowledge. 
+This is a coding focused tech blog for developers to share their experiences and their knowledge. You can post something, and people can comment under your posts.
 
 ## Table of Contents 
 - [Installation](#installation)
@@ -28,6 +28,8 @@ Npm packages used:
 - mysql2 
 - sequelize
 - connect-session-sequelize
+- tailwind
+- insomnia
 
 ## License
 
