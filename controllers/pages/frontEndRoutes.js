@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Post, User } = require("../../models");
-var logged;
+
 
  // takes to login page
 router.get("/login", (req, res) => {

@@ -37,7 +37,7 @@ signUpForm.addEventListener("submit", async (event) => {
        alert("passwords don't match");
     }
   } catch (err) {
-    console.log("error:", error);
+    console.log("error:", err);
     alert(err);
   }
 });

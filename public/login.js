@@ -19,7 +19,7 @@ loginForm.addEventListener("submit", async (event) => {
       alert("incorrect credentials");
     }
   } catch (err) {
-    console.log("error:", error);
+    console.log("error:", err);
     alert(err);
   }
 });

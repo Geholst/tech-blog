@@ -1,6 +1,21 @@
 const router = require("express").Router();
 const { User } = require("../../models");
 
+// Gets all users
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.findAll({
+    });
+    if (users.length===0){
+      return res.status(404).json({ msg: 'no users'});
+    }
+    res.json(users);
+  } catch (err) {
+    console.log("err:", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Get a specific user
 router.get('/:id', async (req, res) => {
   try {
@@ -36,20 +51,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Gets all users
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.findAll({
-    });
-    if (users.length===0){
-      return res.status(404).json({ msg: 'no users'});
-    }
-    res.json(users);
-  } catch (err) {
-    console.log("err:", err);
-    res.status(500).json({ message: err.message });
-  }
-});
 
 // updates user
 router.put("/:id", (req, res) => {
@@ -104,7 +105,6 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ message: "wrong password" });
     }
-
     req.session.logged_in = true;
     req.session.user_id = userData.id;
     return res.render("homepage");

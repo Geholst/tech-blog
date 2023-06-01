@@ -1,21 +1,6 @@
 const router = require("express").Router();
 const { Post, User, Comments } = require('../../models');
 
-//gets posts by id
-router.get("/:id", async (req, res) => {
-  try {
-    const postID = await Post.findByPk(req.params.id, {
-      include: [{ model: Comments }],
-    });
-    if (!postID) {
-      res.status(404).json({ message: "No post with that id" });
-      return;
-    }
-    res.status(200).json(postID);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 // gets all blog posts
 router.get('/', async (req, res) => {
   try {
@@ -33,6 +18,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+//gets posts by id
+router.get("/:id", async (req, res) => {
+  try {
+    const postID = await Post.findByPk(req.params.id, {
+      include: [{ model: Comments }],
+    });
+    if (!postID) {
+      res.status(404).json({ message: "No post with that id" });
+      return;
+    }
+    res.status(200).json(postID);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 //creates new blog post
 router.post('/', async (req, res) => {
   try{
@@ -70,7 +70,7 @@ router.put("/:id", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ msg: "error occurred", err });
+      res.status(500).json({ msg: "error", err });
     });
 });
 

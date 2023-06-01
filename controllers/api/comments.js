@@ -1,20 +1,6 @@
 const router = require("express").Router();
 const { Post, User, Comments } = require('../../models');
 
-router.get("/:id", async (req, res) => {
-  try {
-    const userId = await Project.findByPk(req.params.id, {
-      include: [{ model: Task }],
-    });
-    if (!userId) {
-      res.status(404).json({ message: "No users with that id" });
-      return;
-    }
-    res.status(200).json(userId);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 // find all Users
 router.get("/", async (req, res) => {
@@ -33,6 +19,22 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get("/:id", async (req, res) => {
+  try {
+    const userId = await Project.findByPk(req.params.id, {
+      include: [{ model: Task }],
+    });
+    if (!userId) {
+      res.status(404).json({ message: "No users with that id" });
+      return;
+    }
+    res.status(200).json(userId);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Creates a new comment
 router.post("/", async (req, res) => {
   try {
@@ -49,6 +51,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({ err: err });
   }
 });
+
 router.put("/:id", (req, res) => {
   User.update(
     {
@@ -70,7 +73,6 @@ router.put("/:id", (req, res) => {
       res.json(err);
     });
 });
-
 
 //deletes 
 router.delete("/:id", (req, res) => {
