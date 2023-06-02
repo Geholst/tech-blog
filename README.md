@@ -15,7 +15,7 @@ This is a coding focused tech blog for developers to share their experiences and
 This app is deployed to heroku so you don't need to install it. Just go to the website: 
 
 ## Usage
-You will start on the homepage, and be shown a blog post. You can go to the login page to login, 
+You will start on the homepage, and be shown a blog post. You can go to the login page to login, and then post something on the post page. 
 
 ## Credits
 Npm packages used:
