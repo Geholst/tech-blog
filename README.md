@@ -28,7 +28,6 @@ Npm packages used:
 - mysql2 
 - sequelize
 - connect-session-sequelize
-- tailwind
 - insomnia
 
 ## License

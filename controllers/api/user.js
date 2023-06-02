@@ -1,7 +1,8 @@
-const router = require("express").Router();
 const { User } = require("../../models");
+const router = require("express").Router();
 
-// Gets all users
+
+// Get all users
 router.get('/', async (req, res) => {
   try {
     const users = await User.findAll({
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get a specific user
+// Gets user by id
 router.get('/:id', async (req, res) => {
   try {
     const userId = await User.findByPk(req.params.id);
@@ -44,6 +45,7 @@ router.post("/", async (req, res) => {
     }
     req.session.user_id = dbResponse.dataValues.id;
     req.session.logged_in = true;
+
     return res.status(200).json(dbResponse);
   } catch (err) {
     console.log(err);
@@ -51,8 +53,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-
-// updates user
+// updates users
 router.put("/:id", (req, res) => {
   User.update(
     {
@@ -75,7 +76,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-// Deletes user
+// Delete an user
 router.delete("/:id", (req, res) => {
   User.destroy({
     where: {
@@ -88,7 +89,7 @@ router.delete("/:id", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-//logs in
+//logs in and checks if credentials are right
 router.post("/login", async (req, res) => {
   console.log("req.body:", req.body);
   try {
@@ -96,15 +97,17 @@ router.post("/login", async (req, res) => {
     if (!userData) {
       return res
         .status(400)
-        .json({ message: "wrong email" });
+        .json({ message: "wrong credentials" });
     }
 
     const passwordCheck = await userData.checkPassword(req.body.password);
+
     if (!passwordCheck) {
       return res
         .status(400)
-        .json({ message: "wrong password" });
+        .json({ message: "wrong credentials" });
     }
+
     req.session.logged_in = true;
     req.session.user_id = userData.id;
     return res.render("homepage");
@@ -114,7 +117,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// logs out
+
+// logs user out
 router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
@@ -125,3 +129,4 @@ router.post("/logout", (req, res) => {
   }
 });
 module.exports = router;
+

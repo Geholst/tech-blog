@@ -1,5 +1,6 @@
-const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config');
+const { Model, DataTypes } = require('sequelize');
+
 
 class Comments extends Model {}
   Comments.init(
@@ -11,6 +12,7 @@ class Comments extends Model {}
   },
   {
     sequelize,
+  
   }
 );
 

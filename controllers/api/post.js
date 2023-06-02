@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const { Post, User, Comments } = require('../../models');
 
-// gets all blog posts
+//gets all posts
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.findAll({
       include: [Comments, User],
     });
     if (posts.length === 0){
-      return res.status(404).json({ msg: "no post in database "})
+      return res.status(404).json({ msg: "no posts"})
     } else {
       res.json(posts);
     }
@@ -17,15 +17,13 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-//gets posts by id
 router.get("/:id", async (req, res) => {
   try {
     const postID = await Post.findByPk(req.params.id, {
       include: [{ model: Comments }],
     });
     if (!postID) {
-      res.status(404).json({ message: "No post with that id" });
+      res.status(404).json({ message: "No posts" });
       return;
     }
     res.status(200).json(postID);
@@ -33,9 +31,11 @@ router.get("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-//creates new blog post
+
+//creates new blog 
 router.post('/', async (req, res) => {
   try{
+    
   const newPost = ({
     title: req.body.title,
     content: req.body.content,
@@ -51,6 +51,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+// updates posts
 router.put("/:id", (req, res) => {
   console.log("req.body:", req.body);
   Post.update(
@@ -74,7 +75,8 @@ router.put("/:id", (req, res) => {
     });
 });
 
-//deletes blog post
+
+//deletes post
 router.delete('/:id',(req, res) => {
   Post.destroy({
     where: {
@@ -89,5 +91,6 @@ router.delete('/:id',(req, res) => {
     res.status(500).json({ msg: "error", err });
   });
 });
+
 
 module.exports = router;

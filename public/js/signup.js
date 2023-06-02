@@ -1,5 +1,4 @@
 const signUpForm = document.querySelector("#signup-form");
-
 const checkPassword = (pass1, pass2) => {
   if (pass1 === pass2) {
     return true;
@@ -34,7 +33,8 @@ signUpForm.addEventListener("submit", async (event) => {
         alert("error");
       }
     } else {
-       alert("passwords don't match");
+
+       alert("error");
     }
   } catch (err) {
     console.log("error:", err);

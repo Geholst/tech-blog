@@ -2,17 +2,16 @@ const router = require("express").Router();
 const { Post, User } = require("../../models");
 
 
- // takes to login page
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
     return res.redirect("/");
   }
+
   res.render("login", {
     logged_in: req.session.logged_in,
   });
 });
 
-//homepage logged in
 router.get("/", (req, res) => {
   if (req.session.logged_in) {
     Post.findAll({
@@ -24,6 +23,7 @@ router.get("/", (req, res) => {
         allPosts: hbsData,
         logged_in: req.session.logged_in,
       });
+
     });
   } else {
     someObj = {};
@@ -31,8 +31,6 @@ router.get("/", (req, res) => {
   }
 });
 
-
-// sign-up page
 router.get("/sign-up", async (req, res) => {
   try {
     res.render("sign-up");
@@ -42,7 +40,6 @@ router.get("/sign-up", async (req, res) => {
   }
 });
 
-// creates new post
 router.get("/createPost", async (req, res) => {
   if (req.session.logged_in) {
     try {
@@ -56,7 +53,7 @@ router.get("/createPost", async (req, res) => {
   }
 });
 
-//gets posts 
+//gets posts
 router.get("/posts", async (req, res) => {
   if (req.session.logged_in) {
     try {
@@ -82,4 +79,6 @@ router.get("/post/:id", (req, res) => {
 });
 
 module.exports = router;
+
+
 
